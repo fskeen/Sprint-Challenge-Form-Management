@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
-import SignUpForm from './components/SignUpForm'
 import axios from 'axios';
+
+import SignUpForm from './components/SignUpForm'
+import RecipeList from './components/RecipeList'
 
 class App extends React.Component {
   constructor () {
     super();
     this.state = {
-      recipes: ['']
+      recipes: [''],
+      loggedIn: false
     };
   }
 
@@ -21,6 +24,10 @@ class App extends React.Component {
       
   }
 
+  fakeLogin = () => {
+    this.setState({loggedIn: true});
+  }
+
   componentDidMount() {
     this.fetchData()
   }
@@ -29,7 +36,7 @@ class App extends React.Component {
     if (prevState.recipes.length !== this.state.recipes.length) {
       this.fetchData()
     } else {
-      return prevState
+      return prevState;
     }
   }
 
@@ -37,7 +44,8 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <SignUpForm />
+        <SignUpForm fakeLogin={this.fakeLogin} />
+        <RecipeList recipes={this.state.recipes}/>
       </div>
     );
 

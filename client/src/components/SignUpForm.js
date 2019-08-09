@@ -3,8 +3,6 @@ import { Form, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-import { TOS } from './Data';
-
 function SignUpForm ({errors, touched, values, handleSubmit, status}) {
 
     const [userList, setUserList] = useState([])
@@ -60,12 +58,6 @@ function SignUpForm ({errors, touched, values, handleSubmit, status}) {
                 
             </div>
             
-            {/*<p>Terms of Service</p>
-            <section className="TOS">
-            
-                {TOS}
-            </section>*/}
-            
             <div className="TOS-checkbox">
                 <Field
                     type="checkbox"
@@ -77,7 +69,7 @@ function SignUpForm ({errors, touched, values, handleSubmit, status}) {
             </div>
             
             
-            <button type="submit">Create account</button>
+            <button type="submit" data-testid="submit">Create account</button>
         </Form>
         </div>
     )
@@ -102,7 +94,7 @@ const FormikSignUpForm = withFormik({
         TOS: Yup.bool().oneOf([true],"You must accept the terms and conditions to continue.")
     }),
 
-    handleSubmit(values, { setStatus, resetForm }) {
+    handleSubmit(values, { setStatus, resetForm }, fakeLog) {
         axios
             .post('http://localhost:5000/api/register', values)
             .then(res => {
